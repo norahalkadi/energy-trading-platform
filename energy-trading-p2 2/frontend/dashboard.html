@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard — Smart Energy Trading Platform</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- ---------- Sidebar ---------- -->
+      <div class="sidebar">
+        <div class="sidebar-brand">
+          <span class="dot">⚡</span> Energy Trading
+        </div>
+
+        <div class="sidebar-nav">
+          <span class="sidebar-section-label">Menu</span>
+          <button class="sidebar-link active">
+            <span class="icon">📊</span> Dashboard
+          </button>
+          <button
+            class="sidebar-link"
+            onclick="window.location.href = 'marketplace.html'"
+          >
+            <span class="icon">🛒</span> Marketplace
+          </button>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="sidebar-user">
+            <div class="sidebar-avatar" id="sidebarAvatar">?</div>
+            <div class="sidebar-user-info">
+              <div class="name" id="sidebarName">—</div>
+              <div class="role" id="sidebarMeter">—</div>
+            </div>
+          </div>
+          <button class="sidebar-logout" onclick="logout()">
+            <span class="icon">↪</span> Log Out
+          </button>
+        </div>
+      </div>
+
+      <!-- ---------- Main content ---------- -->
+      <div class="main-content">
+        <div class="topbar">
+          <div class="topbar-title">Dashboard</div>
+        </div>
+
+        <div class="page-content">
+          <div class="section-card">
+            <div class="section-heading">
+              <h1>Your Energy Dashboard</h1>
+              <p class="subtitle">Latest reading from your simulated meter.</p>
+            </div>
+
+            <div class="stat-grid">
+              <div class="stat-card">
+                <div class="stat-icon icon-green">☀️</div>
+                <div class="stat-label">Production</div>
+                <div class="stat-value" id="statProduction">Loading...</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon icon-blue">🔌</div>
+                <div class="stat-label">Consumption</div>
+                <div class="stat-value" id="statConsumption">Loading...</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-icon icon-purple">💰</div>
+                <div class="stat-label">Energy Status</div>
+                <div class="stat-value" id="statSurplus">Loading...</div>
+              </div>
+            </div>
+
+            <p class="subtitle" id="noDataMessage">
+              No readings yet for your meter. Start the simulator on the backend
+              once an admin has approved your account.
+            </p>
+          </div>
+
+          <!-- ---------- Sell your surplus (manual posting) ---------- -->
+          <div class="section-card" id="sellSection" style="margin-bottom: 0">
+            <div class="section-heading">
+              <h1 style="font-size: 16px">Sell Your Surplus</h1>
+              <p class="subtitle" id="sellSubtitle">
+                Checking your current surplus and listing status...
+              </p>
+            </div>
+
+            <!-- Shown when the user has surplus and no active listing yet -->
+            <form id="sellForm" class="field-row hidden">
+              <div class="field">
+                <label for="sellAmount">Available to Sell (kWh)</label>
+                <input id="sellAmount" type="text" readonly />
+              </div>
+              <div class="field">
+                <label for="sellPrice">Price per kWh (SAR)</label>
+                <input
+                  id="sellPrice"
+                  type="text"
+                  placeholder="e.g. 0.30"
+                  required
+                />
+              </div>
+              <div class="field" style="display: flex; align-items: flex-end">
+                <button type="submit" class="btn btn-primary">
+                  List for Sale
+                </button>
+              </div>
+            </form>
+
+            <!-- Shown when the user already has an active listing -->
+            <div id="activeListingBox" class="listing-card hidden">
+              <div class="listing-avatar">⚡</div>
+              <div class="listing-body">
+                <div class="listing-title">Your Active Listing</div>
+                <div class="listing-sub" id="activeListingDetails">—</div>
+              </div>
+              <div class="listing-actions">
+                <button class="btn btn-outline btn-sm" id="cancelListingBtn">
+                  Cancel Listing
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin — Smart Energy Trading Platform</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <div class="sidebar">
+        <div class="sidebar-brand">
+          <span class="dot">⚡</span> Energy Trading
+        </div>
+
+        <div class="sidebar-footer" style="margin-top: auto">
+          <div class="sidebar-user">
+            <div class="sidebar-avatar" id="sidebarAvatar">A</div>
+            <div class="sidebar-user-info">
+              <div class="name" id="sidebarName">—</div>
+              <div class="role">Platform Admin</div>
+            </div>
+          </div>
+          <button class="sidebar-logout" onclick="logout()">
+            <span class="icon">↪</span> Log Out
+          </button>
+        </div>
+      </div>
+
+      <div class="main-content">
+        <div class="topbar">
+          <div class="topbar-title">Admin</div>
+
+          <div class="topbar-right">
+            <div class="notif-wrapper">
+              <button class="notif-bell" id="notifBellBtn">
+                🔔
+                <span class="notif-dot hidden" id="notifDot"></span>
+              </button>
+
+              <div class="notif-dropdown hidden" id="notifDropdown">
+                <div class="notif-dropdown-header">Notifications</div>
+                <div class="notif-dropdown-list" id="notifDropdownList">
+                  <div class="notif-empty">No notifications yet.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="page-content">
+          <div class="section-card" style="margin-bottom: 0">
+            <div class="section-heading">
+              <h1>Admin &mdash; User Verification</h1>
+              <p class="subtitle">
+                Review new user registrations and approve or reject them before
+                they can trade on the platform.
+              </p>
+            </div>
+            <div class="listing-list" id="pendingList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+  </body>
+</html>

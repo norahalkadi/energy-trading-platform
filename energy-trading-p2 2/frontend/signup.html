@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account — Smart Energy Trading Platform</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="auth-shell">
+
+    <div class="auth-form-panel">
+      <div class="card">
+
+        <div id="signupForm">
+          <span class="badge">⚡ Smart Energy Trading Platform</span>
+          <h1>Create New Account</h1>
+          <p class="subtitle">Every new account is reviewed by an admin before it can trade.</p>
+
+          <div class="field">
+            <label for="fullName">Full Name</label>
+            <input id="fullName" type="text" placeholder="e.g. Ahmed Al-Rashid" required />
+          </div>
+
+          <div class="field">
+            <label for="signupEmail">Email</label>
+            <input id="signupEmail" type="email" placeholder="name@example.com" required />
+          </div>
+
+          <div class="field">
+            <label for="signupPassword">Password</label>
+            <input id="signupPassword" type="password" placeholder="••••••••" required />
+          </div>
+
+          <div class="field">
+            <label for="confirmPassword">Confirm Password</label>
+            <input id="confirmPassword" type="password" placeholder="••••••••" required />
+          </div>
+
+          <p id="errorMessage" class="subtitle hidden" style="color:#dc2626"></p>
+
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary" onclick="submitSignup()">
+              Create Account
+            </button>
+            <button type="button" class="btn btn-outline" style="flex:0 0 auto; padding:12px 22px;"
+                    onclick="window.location.href='login.html'">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <div id="pendingMessage" class="hidden center-text">
+          <div class="badge">⚡ Smart Energy Trading Platform</div>
+          <h1>Account Created</h1>
+          <p class="subtitle">
+            Thanks for signing up! Your account is now <strong>pending admin
+            verification</strong>. You'll be able to log in once an admin
+            approves your registration.
+          </p>
+          <button class="btn btn-primary" onclick="window.location.href='login.html'">
+            Back to Login
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+ 
+  <script src="js/config.js"></script>
+  <script>
+    async function submitSignup() {
+      const name = document.getElementById('fullName').value
+      const email = document.getElementById('signupEmail').value
+      const password = document.getElementById('signupPassword').value
+      const confirmPassword = document.getElementById('confirmPassword').value
+      const errorMessage = document.getElementById('errorMessage')
+      errorMessage.classList.add('hidden')
+
+      if (!name || !email || !password) {
+        errorMessage.textContent = 'please fill in every field'
+        errorMessage.classList.remove('hidden')
+        return
+      }
+
+      if (password !== confirmPassword) {
+        errorMessage.textContent = 'passwords do not match'
+        errorMessage.classList.remove('hidden')
+        return
+      }
+
+      const response = await fetch(API_URL + '/api/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, password })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        errorMessage.textContent = data.message || 'signup failed'
+        errorMessage.classList.remove('hidden')
+        return
+      }
+
+      document.getElementById('signupForm').classList.add('hidden')
+      document.getElementById('pendingMessage').classList.remove('hidden')
+    }
+  </script>
+</body>
+</html>

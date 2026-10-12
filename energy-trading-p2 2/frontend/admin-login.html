@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Log In — Smart Energy Trading Platform</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px; background:var(--bg);">
+    <div class="card">
+      <span class="badge">🛡️ Admin Access</span>
+      <h1>Admin Log In</h1>
+      <p class="subtitle">Sign in with your admin credentials to review and verify user accounts.</p>
+
+      <form id="adminLoginForm">
+        <div class="field">
+          <label for="adminEmail">Admin Email</label>
+          <input id="adminEmail" type="email" placeholder="admin@example.com" required />
+        </div>
+
+        <div class="field">
+          <label for="adminPassword">Password</label>
+          <input id="adminPassword" type="password" placeholder="••••••••" required />
+        </div>
+
+        <p id="errorMessage" class="subtitle hidden" style="color:#dc2626"></p>
+
+        <button type="submit" class="btn btn-primary">Log In as Admin</button>
+      </form>
+
+      <p class="subtitle center-text" style="margin-top:20px; margin-bottom:0">
+        Not an admin?
+        <button type="button" class="btn-link" onclick="window.location.href='login.html'">Back to user login</button>
+      </p>
+    </div>
+  </div>
+
+
+  <script src="js/config.js"></script>
+  <script>
+    document.getElementById('adminLoginForm').addEventListener('submit', async function (e) {
+      e.preventDefault()
+
+      const email = document.getElementById('adminEmail').value
+      const password = document.getElementById('adminPassword').value
+      const errorMessage = document.getElementById('errorMessage')
+      errorMessage.classList.add('hidden')
+
+      const response = await fetch(API_URL + '/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        errorMessage.textContent = data.message
+        errorMessage.classList.remove('hidden')
+        return
+      }
+
+      if (data.role !== 'admin') {
+        errorMessage.textContent = 'this is not an admin account'
+        errorMessage.classList.remove('hidden')
+        return
+      }
+
+      localStorage.setItem('user', JSON.stringify(data))
+      window.location.href = 'admin.html'
+    })
+  </script>
+</body>
+</html>
